@@ -18,7 +18,7 @@ exports.create = function (req, res) {
     // Save Note in the database
     note.save()
         .then(data => {
-            res.send(data);
+            res.status(201).send(data);
         }).catch(err => {
             res.status(500).send({
                 message: err.message || "Some error occured while trying to create note"
@@ -30,7 +30,7 @@ exports.create = function (req, res) {
 exports.findAll = function (req, res) {
     Note.find()
         .then(notes => {
-            res.send(notes);
+            res.status(200).send(notes);
         }).catch(err => {
             res.status(500).send({
                 message: err.message || "Some error occured while retrieving notes"
@@ -47,7 +47,7 @@ exports.findOne = function (req, res) {
                 message: "Note not found with id " + req.params.noteId
             });            
         }
-        res.send(note);
+        res.status(200).send(note);
     }).catch(err => {
         if(err.kind === 'ObjectId') {
             return res.status(404).send({
@@ -80,7 +80,7 @@ exports.update = function (req, res) {
                 message: "Note not found with id " + req.params.noteId
             });
         }
-        res.send(note);
+        res.status(200).send(note);
     }).catch(err => {
         if(err.kind === 'ObjectId') {
             return res.status(404).send({
